@@ -1,3 +1,5 @@
+/* When working with media-queries, you will still have base styling. This base styling will 
+either be for your mobile view (smallest view) or your desktop view (largest view). */
 .App {
   text-align: center;
 }
@@ -17,6 +19,18 @@
   width: 125px;
 }
 
+.dropdown-menu {
+  height: 150px;
+  width: 100%;
+  position: fixed;
+  top: 125px;
+  background-color: #444445;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border-top: 2px solid black;
+}
+
 .body-component {
   height: calc(100vh - 125px);
   background-color: white;
@@ -27,14 +41,94 @@
   justify-content: space-evenly;
 }
 
+/* When using animations, you first need to define the element can be animated. This is done
+with the animation-name property. You provide what you would like the animation to be called,
+and you will build it in keyframes below (underneath the media-queries). animation-duration 
+determines how long the animation will run for, animation-iteration-count determines how many
+times you would like the animation to run, and animation-timing-function determines whether 
+you would like the timing to run linear (no change in pace of animation) or not. */
 .rotating-box {
   height: 200px;
   width: 200px;
   background-color: green;
+  /* animation-name: rotate; */
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 
+/* Transitions start by defining the element can transition, using the transition property. 
+This just takes a value of how long you would like the transition to run for. Transitions are 
+based on pseudo-classes(hover, focus, active, etc) and will be defined there. */
 .scale-box {
   height: 100px;
   width: 100px;
   background-color: blue;
+  transition: 5s;
+}
+
+/* By defining the hover state for .scale-box, you are defining a way this element can
+transition from its normal state(above) to the hover state. You can use the transform property
+(just like in animations) to change things like rotation or scale, but it is also possible to 
+adjust element properties with typical things like height and width. */
+.scale-box:hover {
+  height: 200px;
+  width: 200px;
+  transform: rotate(360deg);
+}
+
+.desktop-links {
+  display: none;
+}
+
+/* media-queries are defined with @media. This is passed an argument(min-width for mobile-first
+and max-width for desktop first) that is the pixel measurement for the next 'view'. Only changes
+to the elements need to be included in the media-query, NOT an entirely new set of styling for 
+every element. You can have multiple media-queries for one application.*/
+@media(min-width: 500px){
+  .header {
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+
+  .header-logo {
+    margin-left: 25px;
+  }
+
+  .dropdown-button {
+    margin-right: 25px;
+  }
+}
+
+@media(min-width: 1000px){
+  .dropdown-button {
+    display: none;
+  }
+
+  .dropdown-menu {
+    display: none;
+  }
+
+  .desktop-links {
+    width: 25%;
+    display: flex;
+    justify-content: space-around;
+  }
+}
+
+/* @keyframes is how we define an animation. It is followed by the animation we are defining,
+which in belows case is the 'rotate' animation (found in the .rotate-box styling). Any element 
+that has the rotate animation name would run the given animation, meaning multiple elements can
+use the same animation. Inside of keyframes, you use either from and to, or percentages to 
+define what the animation does at different phases of the animation. From and to simply define 
+the start and end points of the animation, and in belows case, determine the element will start
+at a 0 degrees rotation, and end at a 360 degrees rotation. */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
 }
